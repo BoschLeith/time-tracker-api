@@ -1,0 +1,12 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variable files
+.env
+
+# TypeScript build output
+dist/
+build/
+
+# SQLite database file
+*.db
