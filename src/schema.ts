@@ -1,5 +1,4 @@
-import { sql } from "drizzle-orm";
-import { sqliteTable, integer, text, real, int } from "drizzle-orm/sqlite-core";
+import { int, integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 // Clients table
 export const clients = sqliteTable("clients", {
@@ -7,7 +6,7 @@ export const clients = sqliteTable("clients", {
   name: text("name").notNull(),
   email: text("email").unique(),
   hourlyRate: real("hourly_rate").notNull().default(0),
-  createdAt: text().default(sql`(CURRENT_DATE)`),
+  createdAt: text("created_at").default(new Date().toISOString()),
 });
 
 // Time Entries table
@@ -20,8 +19,10 @@ export const timeEntries = sqliteTable("time_entries", {
   startTime: integer("start_time").notNull(),
   endTime: integer("end_time"),
   duration: integer("duration"), // In minutes
-  createdAt: text().default(sql`(CURRENT_DATE)`),
+  createdAt: text("created_at").default(new Date().toISOString()),
 });
+
+export type TimeEntry = typeof timeEntries.$inferInsert;
 
 // Transactions table
 export const transactions = sqliteTable("transactions", {
@@ -31,5 +32,5 @@ export const transactions = sqliteTable("transactions", {
     .references(() => clients.id, { onDelete: "cascade" }),
   amount: real("amount").notNull(),
   description: text("description"),
-  createdAt: text().default(sql`(CURRENT_DATE)`),
+  createdAt: text("created_at").default(new Date().toISOString()),
 });
