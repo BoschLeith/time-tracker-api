@@ -6,10 +6,10 @@ import { Request, Response } from "express";
 // Create a transaction
 export const createTransaction = async (req: Request, res: Response) => {
   try {
-    const { clientId, amount, description } = req.body;
+    const { userId, clientId, amount, description } = req.body;
     const [newTransaction] = await db
       .insert(transactions)
-      .values({ clientId, amount, description })
+      .values({ userId, clientId, amount, description })
       .returning();
     res.status(201).json(newTransaction);
   } catch (error) {

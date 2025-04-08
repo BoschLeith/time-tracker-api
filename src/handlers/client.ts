@@ -5,10 +5,10 @@ import { Request, Response } from "express";
 
 export const createClient = async (req: Request, res: Response) => {
   try {
-    const { name, email, hourlyRate } = req.body;
+    const { userId, name, email, hourlyRate } = req.body;
     const [newClient] = await db
       .insert(clients)
-      .values({ name, email, hourlyRate })
+      .values({ userId, name, email, hourlyRate })
       .returning();
     res.status(201).json(newClient);
   } catch (error) {

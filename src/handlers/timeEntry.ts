@@ -6,10 +6,11 @@ import { Request, Response } from "express";
 // Create a time entry
 export const createTimeEntry = async (req: Request, res: Response) => {
   try {
-    const { clientId, description, startTime, endTime, duration } = req.body;
+    const { userId, clientId, description, startTime, endTime, duration } =
+      req.body;
     const [newTimeEntry] = await db
       .insert(timeEntries)
-      .values({ clientId, description, startTime, endTime, duration })
+      .values({ userId, clientId, description, startTime, endTime, duration })
       .returning();
     res.status(201).json(newTimeEntry);
   } catch (error) {
